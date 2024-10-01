@@ -1,0 +1,59 @@
+RISC-V ALE commands:
+write-stdin string
+    Writes a string to the stdin (file descritor = 0)
+SweRV Commands:
+The argument hart=<id> may be used with any command.
+help [<command>]
+  Print help for given command or for all commands if no command given.
+run
+  Run till interrupted.
+until <address>
+  Run until address or interrupted.
+step [<n>]
+  Execute n instructions (1 if n is missing).
+peek <res> <addr>
+  Print value of resource res (one of r, f, c, m) and address addr.
+  For memory (m) up to 2 addresses may be provided to define a range
+  of memory locations to be printed.
+  examples: peek r x1   peek c mtval   peek m 0x4096
+peek pc
+  Print value of the program counter.
+peek all
+  Print value of all non-memory resources
+poke res addr value
+  Set value of resource res (one of r, c or m) and address addr
+  Examples: poke r x1 0xff  poke c 0x4096 0xabcd
+disass opcode <code> <code> ...
+  Disassemble opcodes. Example: disass opcode 0x3b 0x8082
+disass function <name>
+  Disassemble function with given name. Example: disas func main
+disass <addr1> <addr2>>
+  Disassemble memory locations between addr1 and addr2.
+elf file
+  Load elf file into simulated memory.
+hex file
+  Load hex file into simulated memory.
+replay_file file
+  Open command file for replay.
+replay n
+  Execute the next n commands in the replay file or all the
+  remaining commands if n is missing.
+replay step n
+  Execute consecutive commands from the replay file until n
+  step commands are executed or the file is exhausted
+reset [<reset_pc>]
+  Reset hart.  If reset_pc is given, then change the reset program
+  counter to the given reset_pc before resetting the hart.
+symbols
+  List all the symbols in the loaded ELF file(s).
+pagetable
+  Print the entries of the address tanslation table.
+exception inst [<offset>]
+  Take an instruction access fault on the subsequent step command. Given
+  offset (defaults to zero) is added to the instruction PC to form the address
+  responsible for the fault (that address is placed in the mtval CSR).
+exception data [<offset>]
+  Take a data access fault on the subsequent load/store instruction executed
+  by a step command. The offset value is currently not used.
+quit
+  Terminate the simulator
